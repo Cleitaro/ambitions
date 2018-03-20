@@ -53,6 +53,10 @@ class CardView: UIView {
             lifePoint = characterCard.lifePoint
             resistance = characterCard.resistance
             attack = characterCard.attack
+        } else {
+            lifePoint = nil
+            resistance = nil
+            attack = nil
         }
         cardColor = card.cardType.getCardColor()
         abilities = ""

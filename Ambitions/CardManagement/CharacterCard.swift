@@ -15,13 +15,6 @@ class CharacterCard : Card {
     var resistance : Int
     var attack : Int
     
-    private enum CodingKeys : String, CodingKey {
-        case lifePoint
-        case maxLifePoint
-        case resistance
-        case attack
-    }
-    
     init(fullName: String,
          name: String,
          maxLifePoint: Int,
@@ -47,17 +40,31 @@ class CharacterCard : Card {
                    isUnique: isUnique)
     }
     
+    //MARK: - Encodable
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try super.encode(to: container.superEncoder())
+        try container.encode(lifePoint, forKey: .lifePoint)
+        try container.encode(maxLifePoint, forKey: .maxLifePoint)
+        try container.encode(resistance, forKey: .resistance)
+        try container.encode(attack, forKey: .attack)
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case lifePoint
+        case maxLifePoint
+        case resistance
+        case attack
+    }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         lifePoint = try container.decode(Int.self, forKey: .lifePoint)
         maxLifePoint = try container.decode(Int.self, forKey: .maxLifePoint)
         resistance = try container.decode(Int.self, forKey: .resistance)
         attack = try container.decode(Int.self, forKey: .attack)
-        let superDecoder = try container.superDecoder()
-        try super.init(from: superDecoder)
+        try super.init(from: container.superDecoder())
     }
-    
-    
     
     //MARK: - Change methods
     

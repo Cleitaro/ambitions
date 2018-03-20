@@ -26,10 +26,10 @@ class CardTableViewCell: UITableViewCell {
     func configureWith(_ card: Card?) {
         cardName?.text = card?.fullName
         if let characterCard = card as? CharacterCard {
-            /*let lifePoint = characterCard.lifePoint
+            let lifePoint = characterCard.lifePoint
             let resistance = characterCard.resistance
             let attack = characterCard.attack
-            cardAttributes?.text = "\(String(lifePoint)) - \(String(resistance)) - \(String(attack))"*/
+            cardAttributes?.text = "\(String(lifePoint)) - \(String(resistance)) - \(String(attack))"
             cardAttributesWidthConstraint.constant = 80
         } else {
             cardAttributes?.text = ""

@@ -112,6 +112,43 @@ class Card : Codable, CustomStringConvertible, Equatable {
     static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.fullName == rhs.fullName
     }
+    
+    //MARK: - Encodable
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(fullName, forKey: .fullName)
+        try container.encode(name, forKey: .name)
+        try container.encode(cardType, forKey: .cardType)
+        try container.encode(capabilities, forKey: .capabilities)
+        try container.encode(shapes, forKey: .shapes)
+        try container.encode(firstAfinity, forKey: .firstAfinity)
+        try container.encode(secondAfinity, forKey: .secondAfinity)
+        try container.encode(isUnique, forKey: .isUnique)
+    }
+    
+    //MARK: - Decodable
+    private enum CodingKeys : String, CodingKey {
+        case fullName
+        case name
+        case cardType
+        case capabilities
+        case shapes
+        case firstAfinity
+        case secondAfinity
+        case isUnique
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        fullName = try container.decode(String.self, forKey: .fullName)
+        name = try container.decode(String.self, forKey: .name)
+        cardType = try container.decode(Card.CardType.self, forKey: .cardType)
+        capabilities = try container.decode([Capability].self, forKey: .capabilities)
+        shapes = try container.decode([Shape].self, forKey: .shapes)
+        firstAfinity = try container.decode(Afinities?.self, forKey: .firstAfinity)
+        secondAfinity = try container.decode(Afinities?.self, forKey: .secondAfinity)
+        isUnique = try container.decode(Bool.self, forKey: .isUnique)
+    }
 }
 
 extension Array where Element: Comparable {

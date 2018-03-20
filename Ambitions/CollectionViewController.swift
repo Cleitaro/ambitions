@@ -88,7 +88,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
                     card.enabledInCollection = deck.hero == nil
                 case Card.CardType.ally :
                     card.enabledInCollection = deck.allies.count < deck.maxAllies
-                                                && !deck.allies.contains(card)
+                        && !deck.allies.contains(card as! CharacterCard)
                 case Card.CardType.equipment :
                     card.enabledInCollection = deck.equipments.count < deck.maxEquipments
                                                 && deck.equipments.filter{$0 == card}.count

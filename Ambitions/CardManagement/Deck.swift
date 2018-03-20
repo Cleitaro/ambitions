@@ -10,8 +10,8 @@ import Foundation
 
 struct Deck : Codable {
     
-    var hero : Card?
-    var allies = [Card]()
+    var hero : CharacterCard?
+    var allies = [CharacterCard]()
     var maxAllies = 5
     var ambitions = [Card]()
     var maxAmbitions = 5
@@ -96,9 +96,9 @@ struct Deck : Codable {
         //TODO : handle deck constraints here AND/OR in collectionViewController
         switch card.cardType {
             case .hero:
-                hero = card
+                hero = card as? CharacterCard
             case .ally:
-                allies.append(card)
+                allies.append(card as! CharacterCard)
             case .ambition:
                 ambitions.append(card)
             case .ability:
